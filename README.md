@@ -6,7 +6,33 @@ My version of the CleanYourTV idea, adapted for the TV I actually own.
 > [Gathin23/cleanyourtv](https://github.com/Gathin23/cleanyourtv): "Vibe coded my parents' TV…
 > removed 25 Xiaomi packages and wrote a new launcher. Looks like an Apple TV now."
 
-## My TV
+## Kunmi fork customisations
+
+This fork is adapted for Kunmi's **Samsung S95F** in Hamburg. Its dashboard now
+opens with a default app row:
+
+- **YouTube**
+- **Disney+**
+- **Netflix**
+- **MagentaTV**
+- **Moonlight**
+- **TizenBrew**
+- **Samsung** — returns to Samsung's default Home screen
+
+In the installed Tizen app (`tizen-app/`, shown as **Kunmi Home**), the tiles
+use Samsung's Application API to launch the installed native apps. If a known
+app ID does not match the TV's regional build, the launcher scans the TV's
+installed apps by name before reporting that the app was not found. This
+name scan is especially important for MagentaTV, whose Tizen app ID is not
+published by Telekom.
+
+When the same page is opened in a normal browser instead of the installed TV
+app, YouTube, Disney+, Netflix and MagentaTV fall back to their web players.
+Moonlight, TizenBrew and Samsung Home require the installed TV app; the
+Samsung tile falls back to exiting the dashboard if Samsung Home cannot be
+launched directly.
+
+## Upstream owner's TV
 
 - **Samsung 50" Crystal UHD U8000F (2025)**, model `UN50U8000FFXZC`, Tizen OS
 

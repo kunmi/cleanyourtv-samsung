@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://kdega77.github.io/home-dashboard" version="1.0.0" viewmodes="maximized">
-  <tizen:application id="HomDshbrd1.HomeDashboard" package="HomDshbrd1" required_version="2.3"/>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="https://kunmi.github.io/cleanyourtv-samsung" version="1.1.0" viewmodes="maximized">
+  <tizen:application id="KunmiHome1.KunmiHome" package="KunmiHome1" required_version="2.3"/>
   <content src="index.html"/>
   <access origin="*" subdomains="true"/>
   <icon src="icon.png"/>
-  <name>Home Dashboard</name>
-  <description>Home dashboard: clock, Thornhill weather, XEQT/VFV + NIFTYBEES/INFY watch with live ticker.</description>
+  <name>Kunmi Home</name>
+  <description>Custom Samsung TV home dashboard with default app tiles for YouTube, Disney+, Netflix, MagentaTV, Moonlight, TizenBrew, and Samsung Home.</description>
   <tizen:profile name="tv"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.info"/>
   <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="internal" hwkey-event="enable"/>
 </widget>

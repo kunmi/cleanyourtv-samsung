@@ -10,7 +10,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;background:radial-gradient(ellipse at 18% 0%,#182946 0%,var(--bg) 50%);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif}
 body{overflow:hidden}
-main{height:100vh;padding:2.1vh 2.5vw;display:grid;grid-template-rows:auto auto 1fr auto;gap:1.5vh}
+main{height:100vh;padding:2.1vh 2.5vw;display:grid;grid-template-rows:auto auto auto 1fr auto;gap:1.5vh}
 header{display:flex;align-items:center;justify-content:space-between;gap:2vw}
 .eyebrow{font-size:clamp(12px,1vw,18px);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 h1{font-size:clamp(38px,5.2vw,88px);line-height:1;margin:.3em 0 .15em;font-weight:650;letter-spacing:-.045em}
@@ -20,6 +20,15 @@ h1{font-size:clamp(38px,5.2vw,88px);line-height:1;margin:.3em 0 .15em;font-weigh
 .temp{font-size:clamp(32px,3.5vw,58px);font-weight:600}
 .condition{font-size:clamp(14px,1.3vw,22px);color:var(--muted)}
 .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.apps-head{display:flex;align-items:center;justify-content:space-between;gap:2vw;margin-bottom:1vh}
+.apps-head .card-title{margin-bottom:0}
+.app-status{font-size:clamp(11px,.95vw,16px);color:var(--muted);text-align:right}
+.app-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1vw}
+.app-tile{appearance:none;width:100%;min-height:13.5vh;border:1px solid rgba(133,158,196,.18);border-radius:19px;background:linear-gradient(145deg,rgba(24,36,57,.94),rgba(13,21,35,.96));color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55vh;padding:1.2vh .6vw;cursor:pointer;font:inherit;box-shadow:0 12px 30px rgba(0,0,0,.14)}
+.app-tile:hover,.app-tile:focus-visible{border-color:var(--accent);outline:3px solid rgba(158,203,255,.75);outline-offset:2px;transform:translateY(-2px)}
+.app-mark{height:5.2vh;min-width:5.2vh;padding:0 .7vw;border-radius:14px;display:grid;place-items:center;font-size:clamp(22px,2.2vw,38px);font-weight:750;line-height:1;background:rgba(255,255,255,.08)}
+.youtube .app-mark{background:#ff0033;color:#fff}.netflix .app-mark{background:#141414;color:#e50914}.disney .app-mark{background:linear-gradient(140deg,#113ccf,#00a3d9);color:#fff}.magenta .app-mark{background:#e20074;color:#fff}.moonlight .app-mark{background:#17365d;color:#bfe3ff}.tizenbrew .app-mark{background:#233826;color:#b7e4c7;font-size:clamp(16px,1.5vw,26px)}.samsung .app-mark{background:#1428a0;color:#fff}
+.app-name{font-size:clamp(14px,1.25vw,22px);font-weight:650;text-align:center}.app-sub{font-size:clamp(10px,.8vw,13px);color:var(--muted);text-align:center}
 .grid{min-height:0;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1fr 1fr;gap:1.4vh 1.2vw}
 .card{min-height:0;background:linear-gradient(145deg,rgba(24,36,57,.94),rgba(13,21,35,.96));border:1px solid rgba(133,158,196,.16);border-radius:22px;padding:2.1vh 1.6vw;box-shadow:0 16px 45px rgba(0,0,0,.15);overflow:hidden}
 .card-title{font-size:clamp(13px,1.15vw,19px);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.6vh}
@@ -46,7 +55,7 @@ h1{font-size:clamp(38px,5.2vw,88px);line-height:1;margin:.3em 0 .15em;font-weigh
 .footer{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:clamp(10px,.8vw,14px);gap:2vw}
 .status{display:flex;align-items:center;gap:.6vw}
 .dot{width:8px;height:8px;border-radius:50%;background:#75d7a4}
-@media(max-width:700px){body{overflow:auto}main{height:auto;min-height:100vh;grid-template-rows:auto auto auto auto}.grid{grid-template-columns:1fr;grid-template-rows:auto}.card{min-height:210px}.weather-top{align-items:flex-start}.footer{padding-bottom:1vh}}
+@media(max-width:700px){body{overflow:auto}main{height:auto;min-height:100vh;grid-template-rows:auto auto auto auto auto}.app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.app-tile{min-height:112px}.grid{grid-template-columns:1fr;grid-template-rows:auto}.card{min-height:210px}.weather-top{align-items:flex-start}.footer{padding-bottom:1vh}}
 </style>
 </head>
 <body>
@@ -63,6 +72,21 @@ h1{font-size:clamp(38px,5.2vw,88px);line-height:1;margin:.3em 0 .15em;font-weigh
   </div>
 </header>
 <div class="rule"></div>
+<section aria-label="Default apps">
+  <div class="apps-head">
+    <div class="card-title">Apps</div>
+    <div class="app-status" id="appStatus" role="status" aria-live="polite">Choose an app</div>
+  </div>
+  <div class="app-grid" id="appGrid">
+    <button class="app-tile youtube" type="button" data-app="youtube"><span class="app-mark">▶</span><span class="app-name">YouTube</span><span class="app-sub">Videos</span></button>
+    <button class="app-tile disney" type="button" data-app="disney"><span class="app-mark">D+</span><span class="app-name">Disney+</span><span class="app-sub">Streaming</span></button>
+    <button class="app-tile netflix" type="button" data-app="netflix"><span class="app-mark">N</span><span class="app-name">Netflix</span><span class="app-sub">Streaming</span></button>
+    <button class="app-tile magenta" type="button" data-app="magenta"><span class="app-mark">M</span><span class="app-name">MagentaTV</span><span class="app-sub">Telekom TV</span></button>
+    <button class="app-tile moonlight" type="button" data-app="moonlight"><span class="app-mark">☾</span><span class="app-name">Moonlight</span><span class="app-sub">PC streaming</span></button>
+    <button class="app-tile tizenbrew" type="button" data-app="tizenbrew"><span class="app-mark">TB</span><span class="app-name">TizenBrew</span><span class="app-sub">Modules</span></button>
+    <button class="app-tile samsung" type="button" data-action="samsung-home"><span class="app-mark">⌂</span><span class="app-name">Samsung</span><span class="app-sub">Default home</span></button>
+  </div>
+</section>
 <section class="grid">
   <article class="card">
     <div class="card-title">Weather · Thornhill</div>
@@ -138,6 +162,163 @@ function tick(){
   $('date').textContent = new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(now);
 }
 tick(); setInterval(tick,1000);
+
+// Default app launcher. Native launching needs the Tizen Application API,
+// which is available in the installed TV app. In a normal browser, streaming
+// tiles fall back to the service's web player where one exists.
+const APP_TARGETS = {
+  youtube: {
+    label: 'YouTube',
+    ids: ['9Ur5IzDKqV.TizenYouTube'],
+    namePattern: /youtube/i,
+    web: 'https://www.youtube.com/'
+  },
+  disney: {
+    label: 'Disney+',
+    ids: ['MCmYXNxgcu.DisneyPlus'],
+    namePattern: /disney/i,
+    web: 'https://www.disneyplus.com/'
+  },
+  netflix: {
+    label: 'Netflix',
+    ids: ['org.tizen.netflix-app', 'RN1MCdNq8t.Netflix'],
+    namePattern: /netflix/i,
+    web: 'https://www.netflix.com/'
+  },
+  magenta: {
+    label: 'MagentaTV',
+    // Samsung's current German store listing is 3202307031625. Unlike the
+    // services above, Telekom does not publish a stable Tizen app ID, so the
+    // installed-app scan below finds the copy actually installed on the TV.
+    ids: [],
+    namePattern: /magenta\s*tv/i,
+    web: 'https://web.magentatv.de/'
+  },
+  moonlight: {
+    label: 'Moonlight',
+    ids: ['MoonLightS.MoonlightWasm'],
+    namePattern: /moonlight/i,
+    web: ''
+  },
+  tizenbrew: {
+    label: 'TizenBrew',
+    ids: ['xvvl3S1bvH.TizenBrewStandalone'],
+    namePattern: /tizenbrew/i,
+    web: ''
+  }
+};
+const appStatus = $('appStatus');
+function setAppStatus(message){ if(appStatus) appStatus.textContent = message; }
+function tizenApplication(){
+  try{ return (typeof tizen !== 'undefined' && tizen.application) ? tizen.application : null; }
+  catch(e){ return null; }
+}
+function launchById(appId){
+  return new Promise((resolve,reject)=>{
+    const app = tizenApplication();
+    if(!app || typeof app.launch !== 'function'){ reject(new Error('Native app launching is unavailable')); return; }
+    let settled = false;
+    const finish = (fn,value)=>{ if(!settled){ settled = true; fn(value); } };
+    try{
+      app.launch(appId, ()=>finish(resolve,appId), err=>finish(reject,err || new Error('Launch failed')));
+    }catch(e){ finish(reject,e); }
+  });
+}
+function findInstalledApp(namePattern){
+  return new Promise(resolve=>{
+    const app = tizenApplication();
+    if(!app || typeof app.getAppsInfo !== 'function'){ resolve(null); return; }
+    let settled = false;
+    const finish = value=>{ if(!settled){ settled = true; resolve(value); } };
+    const timer = setTimeout(()=>finish(null),5000);
+    try{
+      app.getAppsInfo(apps=>{
+        clearTimeout(timer);
+        const match = (apps || []).find(item => item && item.id && namePattern.test(item.name || ''));
+        finish(match ? match.id : null);
+      }, ()=>{ clearTimeout(timer); finish(null); });
+    }catch(e){ clearTimeout(timer); finish(null); }
+  });
+}
+async function openApp(key){
+  const target = APP_TARGETS[key];
+  if(!target) return;
+  const app = tizenApplication();
+  if(!app){
+    if(target.web){
+      setAppStatus('Opening ' + target.label + ' in the browser…');
+      window.location.href = target.web;
+    }else{
+      setAppStatus(target.label + ' can only be launched from the installed TV app.');
+    }
+    return;
+  }
+
+  setAppStatus('Opening ' + target.label + '…');
+  const attempted = new Set();
+  for(const appId of target.ids){
+    attempted.add(appId);
+    try{ await launchById(appId); setAppStatus(target.label + ' opened'); return; }
+    catch(e){ /* Try the next known ID or the installed-app scan. */ }
+  }
+
+  const installedId = await findInstalledApp(target.namePattern);
+  if(installedId && !attempted.has(installedId)){
+    try{ await launchById(installedId); setAppStatus(target.label + ' opened'); return; }
+    catch(e){ /* Fall through to the not-found message. */ }
+  }
+  setAppStatus(target.label + ' was not found on this TV. Install it from Samsung Apps, then try again.');
+}
+async function goSamsungHome(){
+  const app = tizenApplication();
+  if(!app){
+    setAppStatus('Press the Home button on the Samsung remote to return to Samsung Home.');
+    return;
+  }
+  setAppStatus('Opening Samsung Home…');
+  try{
+    await launchById('com.samsung.tv.csfs');
+    setAppStatus('Samsung Home opened');
+  }catch(e){
+    try{
+      const current = app.getCurrentApplication && app.getCurrentApplication();
+      if(current && typeof current.exit === 'function'){ current.exit(); return; }
+    }catch(exitError){ /* Fall through. */ }
+    setAppStatus('Could not open Samsung Home. Press the Home button on the remote.');
+  }
+}
+document.querySelectorAll('[data-app]').forEach(tile=>{
+  tile.addEventListener('click', ()=>openApp(tile.getAttribute('data-app')));
+});
+document.querySelectorAll('[data-action="samsung-home"]').forEach(tile=>{
+  tile.addEventListener('click', goSamsungHome);
+});
+const appTiles = Array.from(document.querySelectorAll('.app-tile'));
+function appColumnCount(){
+  if(!appTiles.length) return 1;
+  const firstTop = appTiles[0].offsetTop;
+  let count = 0;
+  while(count < appTiles.length && appTiles[count].offsetTop === firstTop) count++;
+  return Math.max(1,count);
+}
+document.addEventListener('keydown', event=>{
+  const index = appTiles.indexOf(document.activeElement);
+  if(index < 0) return;
+  const columns = appColumnCount();
+  let next = null;
+  if(event.key === 'ArrowRight') next = index + 1;
+  if(event.key === 'ArrowLeft') next = index - 1;
+  if(event.key === 'ArrowDown') next = index + columns;
+  if(event.key === 'ArrowUp') next = index - columns;
+  if(next !== null && appTiles[next]){
+    event.preventDefault();
+    appTiles[next].focus();
+  }
+});
+if(tizenApplication() && appTiles.length){
+  window.requestAnimationFrame(()=>appTiles[0].focus());
+}
+
 const weatherCodes = {
   0:['Clear sky','☀️'],1:['Mainly clear','🌤️'],2:['Partly cloudy','⛅'],3:['Overcast','☁️'],
   45:['Fog','🌫️'],48:['Rime fog','🌫️'],51:['Light drizzle','🌦️'],53:['Drizzle','🌦️'],55:['Heavy drizzle','🌧️'],

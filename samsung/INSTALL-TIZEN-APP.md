@@ -59,7 +59,7 @@ launches).
 
 ## D. Make it permanent on the TV
 
-1. Find **Home Dashboard** in Apps → select it → **Add to Home** (pins it to
+1. Find **Kunmi Home** in Apps → select it → **Add to Home** (pins it to
    the Home bar like any store app).
 2. Keep **Autorun Last App ON** (All Settings → General & Privacy →
    Start Screen Options) and the keep-awake settings from the cleanup guide,
